@@ -123,7 +123,15 @@ for j in prevStructure.keys():
 
 
 
-# newFilesDict = {}
+newFilesDict = {}
+deletedFilesDict = {}
+for nF in newFiles:
+    newFilesDict.update(eval(nF))
+    
+for dF in deletedFiles:
+    deletedFilesDict.update(eval(dF))
+
+
 # deletedFiles = eval(deletedFiles)
 
-# print(newFiles, deletedFiles)
+print(newFilesDict, deletedFilesDict)
