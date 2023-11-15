@@ -14,7 +14,7 @@ if __name__ == "__main__":
             continue;
 
         if(inp == -1):
-            print("n\n\n")
+            print("\n\n\n")
             continue;
         elif(inp == 1):
             filepath = input("Enter the path of the structure: ")
