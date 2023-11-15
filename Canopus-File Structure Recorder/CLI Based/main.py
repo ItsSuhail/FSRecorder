@@ -5,7 +5,7 @@ import mainStructureCompare
 
 if __name__ == "__main__":
     while(True):
-        print("1* Record a file structure: \n2* Compare two files structures")
+        print("1* Record a file structure: \n2* Compare two files structures: \n3* EXIT: \n\n")
         inp = -1
         try:
             inp = int(input("> "))
@@ -20,14 +20,18 @@ if __name__ == "__main__":
             filepath = input("Enter the path of the structure: ")
             if(os.path.isdir(filepath)):
                 recordName = input("Name of the recording (optional): ")
-                status = mainStructureRecord.RECORD(filepath, recordName)
-                if(status!=None):
-                    print(f"An error occured: {status}")
-                    exit()
+                if(recordName.strip() != ''):
+                    status = mainStructureRecord.RECORD(filepath, recordName)    
+                else:
+                    status = mainStructureRecord.RECORD(filepath)
                 
-                print("Structure recorded successfully.\n\n\n")
+                if(status!=None):
+                    print(f"\n\nAn error occured: {status}")
+                    exit()
+                    
+                print("\n\nStructure recorded successfully.\n\n\n")
             else:
-                print("Please provide valid path.\n\n\n")
+                print("\n\nPlease provide valid path.\n\n\n")
             continue
 
         elif(inp == 2):
@@ -36,7 +40,7 @@ if __name__ == "__main__":
             if(os.path.isfile(oldStructure) and os.path.isfile(newStructure)):
                 newDict, deletedDict = mainStructureCompare.COMPARE(oldStructure, newStructure)
 
-                print("The new files created are: ", newDict, "\n")
+                print("\n\nThe new files created are: ", newDict, "\n")
                 print("The old files deleted are: ", deletedDict, "\n")
                 print("\n\n\n")
             
@@ -45,6 +49,10 @@ if __name__ == "__main__":
             
             continue;
             
+        elif(inp == 3):
+            print("\n\n\n\n")
+            exit(0)
+
         else:
             print("\n\n\n")
             continue;

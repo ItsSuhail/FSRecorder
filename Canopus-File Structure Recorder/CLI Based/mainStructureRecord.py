@@ -1,7 +1,9 @@
 import pickle
 import os
+import datetime
 
-def RECORD(directory, name):
+def RECORD(directory, name=datetime.datetime.now().strftime("%H-%M-%S--%Y-%m-%d")):
+    name = name + ".cfsr"
     try:
         # Getting all the files with the root in the directory
         allFiles = []
