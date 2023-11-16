@@ -1,85 +1,93 @@
 import pickle
 
+# Encoding
+def encode(l):
+    fStr = ""
+    for element in l:
+        fStr = fStr + element + ":|:"
+    
+    fStr = fStr[:len(fStr) - 3]
+    return fStr
+
+# Function which compares the two structures
+def _compare(newStructure, prevStructure):
+    newFiles = set()
+    deletedFiles = set()
+
+    for k in newStructure.keys():
+        pval = []
+        nval = newStructure[k].split(":|:")
+        try:
+            pval = prevStructure[k].split(":|:")
+        except KeyError: # When theres no key
+            newFiles.add(str({k:encode(nval)}))
+            continue
+
+
+        # print(pval, nval)
+
+        for e1 in pval:
+            try:
+                i1 = nval.index(e1)
+                pass
+            except ValueError:
+                deletedFiles.add(str({k:e1}))
+
+        
+        for e2 in nval:
+            try:
+                i2 = pval.index(e2)
+            except ValueError:
+                newFiles.add(str({k:e2}))
+
+    for j in prevStructure.keys():
+        pval = prevStructure[j].split(":|:")
+        nval = []
+        try:
+            nval = newStructure[j].split(":|:")
+        except KeyError: # When theres no key
+            deletedFiles.add(str({j:encode(pval)}))
+            continue
+        
+
+        # print(pval, nval)
+
+        for e11 in pval:
+            try:
+                i11 = nval.index(e11)
+                pass
+            except ValueError:
+                deletedFiles.add(str({j:e11}))
+
+        
+        for e22 in nval:
+            try:
+                i22 = pval.index(e22)
+            except ValueError:
+                newFiles.add(str({j:e22}))
+
+    return newFiles, deletedFiles
+
+
+# deletedFiles = eval(deletedFiles)
+
+# print(newFilesDict, deletedFilesDict)
+
 def COMPARE(prevStructure, newStructure):
     try:
-        # Encoding
-        def encode(l):
-            fStr = ""
-            for element in l:
-                fStr = fStr + element + ":|:"
-            
-            fStr = fStr[:len(fStr) - 3]
-            return fStr
-        
-        
-        prevStructure = pickle.load(open(prevStructure, 'rb'))
-        newStructure = pickle.load(open(newStructure, 'rb'))
-
-        newFiles = set()
-        deletedFiles = set()
-        for i in newStructure.keys():
-            pval = []
-            nval = newStructure[i].split(":|:")
-            try:
-                pval = prevStructure[i].split(":|:")
-            except KeyError: # When theres no key
-                newFiles.add(str({i:encode(nval)}))
-                continue
-
-
-            # print(pval, nval)
-
-            for e1 in pval:
-                try:
-                    index1 = nval.index(e1)
-                    pass
-                except ValueError:
-                    deletedFiles.add(str({i:e1}))
-
-            
-            for e2 in nval:
-                try:
-                    index2 = pval.index(e2)
-                except ValueError:
-                    newFiles.add(str({i:e2}))
-
-        for j in prevStructure.keys():
-            pval = prevStructure[j].split(":|:")
-            nval = []
-            try:
-                nval = newStructure[j].split(":|:")
-            except KeyError: # When theres no key
-                deletedFiles.add(str({j:encode(pval)}))
-                continue
-            
-
-            # print(pval, nval)
-
-            for e21 in pval:
-                try:
-                    index21 = nval.index(e21)
-                    pass
-                except ValueError:
-                    deletedFiles.add(str({j:e21}))
-
-            
-            for e22 in nval:
-                try:
-                    index22 = pval.index(e22)
-                except ValueError:
-                    newFiles.add(str({j:e22}))
-
-
+        loadedNStructure = pickle.load(open(newStructure, 'rb'))
+        loadedPStructure = pickle.load(open(prevStructure, 'rb'))
 
         newFilesDict = {}
         deletedFilesDict = {}
-        for nF in newFiles:
+        filesCreated, filesDeleted = _compare(loadedNStructure, loadedPStructure)
+        for nF in filesCreated:
             newFilesDict.update(eval(nF))
             
-        for dF in deletedFiles:
+        for dF in filesDeleted:
             deletedFilesDict.update(eval(dF))
 
         return newFilesDict, deletedFilesDict
     except Exception as error:
-        print(f"An error occured: {error}")
+        print("An error occuered:", error)
         exit(-1)

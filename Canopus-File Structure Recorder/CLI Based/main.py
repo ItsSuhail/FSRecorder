@@ -1,6 +1,7 @@
 import os
 import mainStructureRecord
 import mainStructureCompare
+import datetime
 
 
 if __name__ == "__main__":
@@ -23,7 +24,7 @@ if __name__ == "__main__":
                 if(recordName.strip() != ''):
                     status = mainStructureRecord.RECORD(filepath, recordName)    
                 else:
-                    status = mainStructureRecord.RECORD(filepath)
+                    status = mainStructureRecord.RECORD(filepath, datetime.datetime.now().strftime("%H-%M-%S--%Y-%m-%d"))
                 
                 if(status!=None):
                     print(f"\n\nAn error occured: {status}")

@@ -14,7 +14,7 @@ def get_files(directory):
 
     return all_files, all_roots
 
-x,y = get_files("F:\\FSRecorder\\Canopus-File Structure Recorder\\CLI Based")
+x,y = get_files("C:\\Users\\Suhail Hasan Kg\\Desktop")
 
 
 # Classifying Test

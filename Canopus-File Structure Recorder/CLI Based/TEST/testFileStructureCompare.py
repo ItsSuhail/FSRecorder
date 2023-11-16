@@ -13,8 +13,8 @@ def encode(l):
 # prevStructure = {'F:\\FSRecorder\\Canopus-File Structure Recorder\\CLI Based': 'testmain.py:|:something.py', 'x':'y'}
 # newStructure = {'F:\\FSRecorder\\Canopus-File Structure Recorder\\CLI Based': 'testmain.py:|:en.py',"m":"N"}
 
-prevStructure = pickle.load(open('pikTst1', 'rb'))
-newStructure = pickle.load(open('pikTst2', 'rb'))
+prevStructure = pickle.load(open('1', 'rb'))
+newStructure = pickle.load(open('2', 'rb'))
 
 
 

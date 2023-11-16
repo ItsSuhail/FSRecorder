@@ -1,8 +1,7 @@
 import pickle
 import os
-import datetime
 
-def RECORD(directory, name=datetime.datetime.now().strftime("%H-%M-%S--%Y-%m-%d")):
+def RECORD(directory, name):
     name = name + ".cfsr"
     try:
         # Getting all the files with the root in the directory
@@ -29,7 +28,7 @@ def RECORD(directory, name=datetime.datetime.now().strftime("%H-%M-%S--%Y-%m-%d"
         
 
         # Recording the structure
-        dFile = open(f"{name}", 'ab')
+        dFile = open(name, 'ab')
         pickle.dump(finalDict, dFile)
         dFile.close()
 
